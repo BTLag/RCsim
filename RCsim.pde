@@ -1,5 +1,5 @@
 
-int[] ROM = {0,129,11,129,1,3,19,12,13,12,1,14,2,3,19,12,13,3,11,136,10};
+int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,16,19,12,13,16,11,134,10};
 
 /* Op codes
 
@@ -101,13 +101,13 @@ void runHardware(){
   if(AO > 255){
     AO = AO - 255;
     overflow = true;
-    println("Overflow");
+    //println("Overflow");
   }
   SO = SA - SB;
   if(SO < 0){
     SO = SO + 255;
     underflow = true;
-    println("Underflow");
+    //println("Underflow");
   }
   if(SO == 0){
     ans0 = true;
@@ -157,7 +157,7 @@ void runInstruction(int input){
   if(input > 127){
     bus = input - 128;
   } else if(input == 0){
-    PA = 0;
+    //noOp
   } else if(input == 1){
     AA = bus;
   } else if (input == 2){
