@@ -1,0 +1,61 @@
+Notes:
+	1)When jumping to a new program address, jump to 1 less then the target
+as it will be incremented before the next instruction is run.
+	2)Jumping based on flags:
+load the addrs you want to jump to (-1) onto the bus, then use the conditional op code.
+If the flag is set, the addrs will be loaded into the program addrs reg, otherwise the
+bus will be cleared and the program addrs will be incremented by 1.
+
+
+
+Adder:
+01 (AA)	Load A
+02 (AB)	Load B
+03 (AO)	Post Output
+
+Sub:
+04 (SA)	Load A
+05 (SB)	Load B
+06 (SO)	Post Output
+
+RAM:
+07 (RA)	Load Address
+08 (RV)	Load Value
+09 (RV)	Post Value
+
+Program Memeory: P
+10 (PA)	Load Address
+
+Cache: C
+11 (CA)	Load A
+12 (CA)	Post A
+13 (CB)	Load B
+14 (CB)	Post B
+15 (CC)	Load C
+16 (CC)	Post C
+17 (CD)	Load D
+18 (CD)	Post D
+
+Return Output: R
+19 (OR)	Load Output
+
+Flags:
+20 (FO)	Clear overflow flag
+21 (FU)	Clear underflow flag
+
+Conditional Jumps:
+22 (JO)	Jump if overflow flag is set
+23 (JU)	Jump if underflow flag is set
+24 (J0)	Jump if SO = 0
+
+
+Registers:
+bus
+Adder:	AA, AB, AO;//input1,input2,output
+Subtr:	SA, SB, SO;//input1,input2,output
+RAM:	RA, RV;//ram addr, ram value
+PrgMem:	PA; //Program mem addr
+Cache:	CA, CB, CC, CD;
+Flags:	underflow,overflow,ans0
+
+

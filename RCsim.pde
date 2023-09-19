@@ -1,5 +1,7 @@
 
-int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,16,19,12,13,16,11,134,10};
+//int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,16,19,12,13,16,11,134,10};//Fib Sqnc
+int[] ROM = {0,128,7,9,11,129,7,9,13,18,4,14,5,156,24,16,1,12,2,3,15,18,1,129,2,3,17,136,10,16,19,255,1,255,2,3,11,12,1,129,2,3,10};//multiply
+int[] RAM = {8,12};
 
 /* Op codes
 
@@ -38,7 +40,7 @@ Return Output: R
 
 boolean autoRun;
 int runTimer;
-int runSpeed = 100;
+int runSpeed = 200;
 
 boolean overflow, underflow, ans0;
 
@@ -53,6 +55,7 @@ void setup(){
   size(1500,800);
   clearReg();
   PA = 1;//Auto run code
+  
 }
 
 void draw(){
@@ -69,7 +72,7 @@ void draw(){
 void keyPressed(){
   if(key == ' '){
     clock();
-  } else if(key == 's') {
+  } else if(key == 's') {//Set program addr to 1
     PA = 1;
   } else if(key == 'r'){
     autoRun = !autoRun;
@@ -87,6 +90,9 @@ void clock(){
     clearBusTracker++;
     if(PA != 0){
       PA++;
+      if(PA > 255){
+        PA = PA - 256;
+      }
     }
   } else {
     bus = 0;
@@ -97,15 +103,16 @@ void clock(){
 
 void runHardware(){
   PV = ROM[PA];
+  RV = RAM[RA];
   AO = AA + AB;
   if(AO > 255){
-    AO = AO - 255;
+    AO = AO - 256;
     overflow = true;
     //println("Overflow");
   }
   SO = SA - SB;
   if(SO < 0){
-    SO = SO + 255;
+    SO = SO + 256;
     underflow = true;
     //println("Underflow");
   }
@@ -196,6 +203,22 @@ void runInstruction(int input){
     bus = CD;
   } else if (input == 19){
     println(bus);
+  } else if (input == 20){
+    overflow = false;
+  } else if (input == 21){
+    underflow = false;
+  } else if (input == 22){
+    if(overflow){
+      PA = bus;
+    }
+  } else if (input == 23){
+    if(underflow){
+      PA = bus;
+    }
+  } else if (input == 24){
+    if(ans0){
+      PA = bus;
+    }
   }
 }
 
@@ -242,6 +265,16 @@ String opName(int input){
     return("Post Cache D");
   } else if (input == 19){
     return("Output Bus");
+  } else if (input == 20){
+    return("Clear Overflow");
+  } else if (input == 21){
+    return("Clear Underflow");
+  } else if (input == 22){
+    return("Jump if overflow");
+  } else if (input == 23){
+    return("Jump if underflow");
+  } else if (input == 24){
+    return("Jump if ans0");
   } else {
     return("Invalid op code");
   }
