@@ -1,0 +1,78 @@
+
+0,129,11,129,13,129,19,12,1,14,2,3,15,150,22,16,19,12,13,16,11,134,10,255,1,255,2,3,10
+
+00  setup {
+01    a = 1
+02    b = 1
+03    print 1
+    }
+04  loop {
+05    c = a + b
+06    if overflow {
+07      halt
+      }
+08    print c
+09    b = a
+10    a = c
+    }
+
+
+01.1: L1 -> CA
+02.1: L1 -> CB
+03.1: L1 -> R
+05.1: CA -> AA
+05.2: CB -> AB
+05.3: AO -> CC
+06.1: L22-> JO
+08.1: CC -> R
+09.1: CA -> CB
+10.1: CC -> CA
+04.1: L6 -> PA
+07.1: L127> AA
+07.2: L127> AB
+07.3: AO -> PA
+
+ 0
+00: 0
+ 1.1
+01:129	post L1
+02:11	load CA
+ 2.1
+03:129	post L1
+04:13	load CB
+ 3.1
+05:129	post L1
+06:19	return
+ 5.1
+07:12	post CA
+08:1	load AA
+ 5.2
+09:14	post CB
+10:2	load AB
+ 5.3
+11:3	post AO
+12:15	load CC
+ 6.1
+13:150	post L22
+14:22	jump if overflow
+ 8.1
+15:16	post CC
+16:19	return
+ 9.1
+17:12	post CA
+18:13	load CB
+10.1
+19:16	post CC
+20:11	load CA
+ 4.1
+21:134	post L6
+22:10	load PA
+ 7.1
+23:255	post L127
+24:1	load AA
+ 7.2
+25:255	post L127
+26:2	load AB
+ 7.3
+27:3	post AO
+28:10	load PA

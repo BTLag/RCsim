@@ -1,7 +1,8 @@
 
 //int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,16,19,12,13,16,11,134,10};//Fib Sqnc
-int[] ROM = {0,128,7,9,11,129,7,9,13,18,4,14,5,156,24,16,1,12,2,3,15,18,1,129,2,3,17,136,10,16,19,255,1,255,2,3,11,12,1,129,2,3,10};//multiply
-int[] RAM = {8,12};
+int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,150,22,16,19,12,13,16,11,134,10,255,1,255,2,3,10};//Fib Sqnc auto-stop
+//int[] ROM = {0,128,7,9,11,129,7,9,13,18,4,14,5,156,24,16,1,12,2,3,15,18,1,129,2,3,17,136,10,16,19,255,1,255,2,3,11,12,1,129,2,3,10};//multiply
+int[] RAM = {5,12,0,0};
 
 /* Op codes
 
@@ -40,7 +41,7 @@ Return Output: R
 
 boolean autoRun;
 int runTimer;
-int runSpeed = 200;
+int runSpeed = 10;
 
 boolean overflow, underflow, ans0;
 
@@ -55,7 +56,15 @@ void setup(){
   size(1500,800);
   clearReg();
   PA = 1;//Auto run code
-  
+  zeroROM();
+}
+
+void zeroROM(){
+  int[] tempROM = ROM;
+  ROM = new int[256];
+  for(int i = 0; i < tempROM.length - 0; i++){
+    ROM[i] = tempROM[i];
+  }
 }
 
 void draw(){

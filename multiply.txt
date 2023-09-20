@@ -2,43 +2,40 @@
 RV for RA 0 should be input a
 RV for RA 1 should be input b
 
-length 43:
 0,128,7,9,11,129,7,9,13,18,4,14,5,156,24,16,1,12,2,3,15,18,1,129,2,3,17,136,10,16,19,255,1,255,2,3,11,12,1,129,2,3,10
 
-01: a = ram[0]
-02: b = ram[1]
-03: if d = b
-{
-04: print c
-05: halt
-}
-06: c = c + a
-07: d = d + 1
-08: goto 3
+00  setup{
+01    a = ram[0]
+02    b = ram[1]
+    }
+03  loop{
+04    if d = b {
+05      print c
+06      halt
+      }
+07    c = c + a
+08    d = d + 1
+    }
 
 
-
-1.1: L0 -> RA
-1.2: RV -> CA
-2.1: L1 -> RA
-2.2: RV -> CB
-3.1: CD -> SA
-3.2: CB -> SB
-3.3: L29-> J0
-6.1: CC -> AA
-6.2: CA -> AB
-6.3: AO -> CC
-7.1: CD -> AA
-7.2: L1 -> AB
-7.3: AO -> CD
-8.1: L9 -> PA
-4.1: CC -> OR
-5.1: L127> AA
-5.2: L127> AB
-5.3: AO -> CA
-5.4: CA -> AA
-5.5: L1 -> AB
-5.6: AO -> PA
+01.1: L0 -> RA
+01.2: RV -> CA
+02.1: L1 -> RA
+02.2: RV -> CB
+04.1: CD -> SA
+04.2: CB -> SB
+04.3: L29-> J0
+07.1: CC -> AA
+07.2: CA -> AB
+07.3: AO -> CC
+08.1: CD -> AA
+08.2: L1 -> AB
+08.3: AO -> CD
+03.1: L9 -> PA
+05.1: CC -> OR
+06.1: L127> AA
+06.2: L127> AB
+06.3: AO -> PA
 
 
 0
@@ -55,54 +52,45 @@ length 43:
 2.2
 07:9	post RV
 08:13	load CB
-3.1
+4.1
 09:18	post CD
 10:4	load SA
-3.2
+4.2
 11:14	post CB
 12:5	load SB
-3.3
+4.3
 13:156	post L28
 14:24	jump if ans0
-6.1
+7.1
 15:16	post CC
 16:1	load AA
-6.2
+7.2
 17:12	post CA
 18:2	load AB
-6.3
+7.3
 19:3	post AO
 20:15	load CC
-7.1
+8.1
 21:18	post CD
 22:1	load AA
-7.2
+8.2
 23:129	post L1
 24:2	load AB
-7.3
+8.3
 25:3	post AO
 26:17	load CD
-8.1
+3.1
 27:136	post L8
 28:10	load PA
-4.1
+5.1
 29:16	post CC
 30:19	return
-5.1
+6.1
 31:255	post L127
 32:1	load AA
-5.2
+6.2
 33:255	post L127
 34:2	load AB
-5.3
+6.3
 35:3	post AO
-36:11	load CA
-5.4
-37:12	post CA
-38:1	load AA
-5.5
-39:129	post L1
-40:2	load AB
-5.6
-41:3	post AO
-42:10	load PA
+36:10	load PA
