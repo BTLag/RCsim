@@ -1,0 +1,56 @@
+0
+00:0  Halt
+01.1
+01:128    post L0
+02:7  load RA
+01.2
+03:9    post RV
+04:11  load CA
+02.1
+05:128    post L0
+06:7  load RA
+02.2
+07:9    post RV
+08:13  load CB
+04.1
+09:18    post CD
+010:4  load SA
+04.2
+011:14    post CB
+012:5  load SB
+04.3
+013:136    post L8
+014:24  Jump if ans0
+07.1
+015:16    post CC
+016:1  load AA
+07.2
+017:12    post CA
+018:2  load AB
+07.3
+019:3    post AO
+020:15  load CC
+08.1
+21:18    post CD
+22:1  load AA
+08.2
+23:128    post L0
+24:2  load AB
+08.3
+25:3    post AO
+26:17  load CD
+03.1
+27:128    post L0
+28:10  Jump to address
+05.1
+29:16    post CC
+30:19  Output return
+06.1
+31:155    post L27
+32:1  load AA
+06.2
+33:155    post L27
+34:2  load AB
+06.3
+35:3    post AO
+36:10  Jump to address

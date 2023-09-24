@@ -24,7 +24,7 @@ RV for RA 1 should be input b
 02.2: RV -> CB
 04.1: CD -> SA
 04.2: CB -> SB
-04.3: L29-> J0
+04.3: L28-> J0
 07.1: CC -> AA
 07.2: CA -> AB
 07.3: AO -> CC
