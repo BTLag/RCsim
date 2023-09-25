@@ -1,8 +1,10 @@
 
-//int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,16,19,12,13,16,11,134,10};//Fib Sqnc
-//int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,150,22,16,19,12,13,16,11,134,10,255,1,255,2,3,10};//Fib Sqnc auto-stop
-int[] ROM = {0,128,7,9,11,129,7,9,13,18,4,14,5,156,24,16,1,12,2,3,15,18,1,129,2,3,17,136,10,16,19,255,1,255,2,3,10};//multiply
+int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,16,19,12,13,16,11,134,10};//Fib Sqnc
+//int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,150,22,16,19,12,13,16,11,134,10,0};//Fib Sqnc auto-stop
+//int[] ROM = {0,128,7,9,11,129,7,9,13,18,4,14,5,156,24,16,1,12,2,3,15,18,1,129,2,3,17,136,10,16,19,0};//multiply
 int[] RAM = {5,12,0,0};
+
+int realROMlength;
 
 /* Op codes
 
@@ -60,6 +62,7 @@ void setup(){
 }
 
 void zeroROM(){
+  realROMlength = ROM.length;
   int[] tempROM = ROM;
   ROM = new int[256];
   for(int i = 0; i < tempROM.length - 0; i++){
@@ -70,6 +73,7 @@ void zeroROM(){
 void draw(){
   runHardware();
   drawBackground();
+  drawProgMem(25,25,300,750);
   if(autoRun){
     if(millis() > runTimer){
       runTimer = millis() + runSpeed;
@@ -87,6 +91,8 @@ void keyPressed(){
     autoRun = !autoRun;
   } else if(key == 'c'){
     clearReg();
+  } else if(key == 'q'){
+    exit();
   }
 }
 
@@ -132,6 +138,54 @@ void runHardware(){
   }
 }
 
+void drawProgMem(int x1, int y1, int x2, int y2){
+  strokeWeight(10);
+  stroke(127);
+  fill(40);
+  rect(x1, y1, x2, y2);//main box
+  strokeWeight(5);
+  rect(x1 + 25, y1 + 55, x2 - 50, 40);//addr
+  rect(x1 + 25, y1 + 95, x2 - 50, 40);//value
+  fill(255);
+  textAlign(CENTER);
+  textSize(32);
+  text("Program Memory", x1 + (x2/2), y1 + 40);
+  textAlign(LEFT);
+  textSize(20);
+  text("Address:" , x1 + 40, y1 +  80);
+  text("Value:"   , x1 + 40, y1 + 120);
+  textAlign(RIGHT);
+  text(PA                    , x1 + x2 - 40, y1 +  80);
+  text(opName(PV) + ": " + PV, x1 + x2 - 40, y1 + 120);
+  textAlign(LEFT);
+  textSize(16);
+  for(int i = 0; i < realROMlength; i++){
+    if(i == PA){
+      fill(255);
+    } else {
+      fill(180);
+    }
+    text(ROMstring(i), x1 + 40, y1 + 160 + ((y2-160.0) / realROMlength) * i);
+  }
+}
+
+String ROMstring(int ROMline){
+  String output = "";
+  if(ROMline < 10){
+    output += "0";
+  }
+  output += ROMline + ": ";
+  if(ROM[ROMline] < 100){
+    output += "  ";
+  }
+  if(ROM[ROMline] < 10){
+    output += "  ";
+  }
+  output += ROM[ROMline] + "  ";
+  output += opName(ROM[ROMline]);
+  return(output);
+}
+
 void drawBackground(){
   background(0);
   strokeWeight(9);
@@ -173,7 +227,7 @@ void runInstruction(int input){
   if(input > 127){
     bus = input - 128;
   } else if(input == 0){
-    //noOp
+    PA = 0;
   } else if(input == 1){
     AA = bus;
   } else if (input == 2){
