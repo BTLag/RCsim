@@ -21,31 +21,31 @@ void setup(){
 
 void buildMcode(){
   Mcode[0] = "0";
-  Mcode[1] = "00:0  Halt";
+  Mcode[1] = "00:0   Halt";
   int McodeL = 2;
   int binL = 0;
   for(int ASML = 0; ASML < asm.length; ASML++){
     Mcode[McodeL] = lineNumber(asm[ASML]);
     McodeL++;
     binL++;
-    if(ASML < 10){
+    if(binL < 10){
       Mcode[McodeL] = "0";
     } else {
       Mcode[McodeL] = "";
     }
     Mcode[McodeL] = Mcode[McodeL] + binL + ":";
     bin[binL] = opNameToCode(ASMtoOpCode(asm[ASML],false),false);
-    Mcode[McodeL] = Mcode[McodeL] + bin[binL] + "    " + opCodeToDesc(bin[binL]);
+    Mcode[McodeL] = Mcode[McodeL] + always4(bin[binL] + "") + opCodeToDesc(bin[binL]);
     McodeL++;
     binL++;
-    if(ASML < 10){
+    if(binL < 10){
       Mcode[McodeL] = "0";
     } else {
       Mcode[McodeL] = "";
     }
     Mcode[McodeL] = Mcode[McodeL] + binL + ":";
     bin[binL] = opNameToCode(ASMtoOpCode(asm[ASML],true),true);
-    Mcode[McodeL] = Mcode[McodeL] + bin[binL] + "  " + opCodeToDesc(bin[binL]);
+    Mcode[McodeL] = Mcode[McodeL] + always4(bin[binL] + "") + opCodeToDesc(bin[binL]);
     McodeL++;
   }
 }
@@ -113,7 +113,6 @@ String opCodeToDesc(int input){
 
 int opNameToCode(String input, boolean load){
   if(load){
-    println(input);
     switch(input) {
       case "AA":
         return(1);
@@ -187,14 +186,13 @@ String ASMtoOpCode(String input, boolean load){
     return(input.substring(12, 14));
   } else {
     if(input.charAt(6) == 'L'){
-      String output = input.substring(6, 7);  
+      String output = input.substring(6, 8);  
       if(input.charAt(8) != ' '){
         output = output + input.charAt(8);
       }
       if(input.charAt(9) != '-'){
         output = output + input.charAt(9);
       }
-      println(input + " | " + output);
       return(output);
     } else {
       return(input.substring(6, 8));
@@ -204,4 +202,17 @@ String ASMtoOpCode(String input, boolean load){
 
 String lineNumber(String input){
   return(input.substring(0, 4));
+}
+
+String always4(String input){//add as many spaces as nesissary to make the string 4 char long
+  switch(input.length()){
+    case 1:
+      return(input + "   ");
+    case 2:
+      return(input + "  ");
+    case 3:
+      return(input + " ");
+    default:
+      return(input);
+  }
 }
