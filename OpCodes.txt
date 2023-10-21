@@ -23,7 +23,7 @@ RAM:
 08 (RV)	Load Value
 09 (RV)	Post Value
 
-Program Memeory: P
+Program Memory: P
 10 (PA)	Load Address
 
 Cache: C

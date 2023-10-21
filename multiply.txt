@@ -31,7 +31,7 @@ RV for RA 1 should be input b
 08.1: CD -> AA
 08.2: L1 -> AB
 08.3: AO -> CD
-03.1: L9 -> PA
+03.1: L8 -> PA
 05.1: CC -> OR
 06.1: L127> AA
 06.2: L127> AB

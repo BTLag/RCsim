@@ -1,6 +1,6 @@
 
-int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,16,19,12,13,16,11,134,10};//Fib Sqnc
-//int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,150,22,16,19,12,13,16,11,134,10,0};//Fib Sqnc auto-stop
+//int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,16,19,12,13,16,11,134,10};//Fib Sqnc
+int[] ROM = {0,129,11,129,13,129,19,12,1,14,2,3,15,150,22,16,19,12,13,16,11,134,10,0};//Fib Sqnc auto-stop
 //int[] ROM = {0,128,7,9,11,129,7,9,13,18,4,14,5,156,24,16,1,12,2,3,15,18,1,129,2,3,17,136,10,16,19,0};//multiply
 int[] RAM = {5,12,0,0};
 
@@ -61,11 +61,11 @@ void setup(){
   zeroROM();
 }
 
-void zeroROM(){
+void zeroROM(){//makes ROM 256 bytes long
   realROMlength = ROM.length;
   int[] tempROM = ROM;
   ROM = new int[256];
-  for(int i = 0; i < tempROM.length - 0; i++){
+  for(int i = 0; i < tempROM.length; i++){
     ROM[i] = tempROM[i];
   }
 }
@@ -82,16 +82,25 @@ void draw(){
   }
 }
 
+
+/*
+Keybinds:
+Space = advance clock by 1
+S = Sets the program addr to 1
+R = toggles autoRun
+C = Clear all registers in the computer
+Q = Quit the simulation
+*/
 void keyPressed(){
-  if(key == ' '){
+  if(key == ' '){//lol, almost tried to add capital space
     clock();
-  } else if(key == 's') {//Set program addr to 1
+  } else if(key == 's' || key == 'S') {
     PA = 1;
-  } else if(key == 'r'){
+  } else if(key == 'r' || key == 'R'){
     autoRun = !autoRun;
-  } else if(key == 'c'){
+  } else if(key == 'c' || key == 'C'){
     clearReg();
-  } else if(key == 'q'){
+  } else if(key == 'q' || key == 'Q'){
     exit();
   }
 }
@@ -195,7 +204,6 @@ void drawBackground(){
   rect(950,100,260,180);
   rect(950,300,260,180);
   rect(950,550,260,160);
-  rect(280,100,275,140);
   rect(280,280,275,170);
   fill(200);
   textSize(20);
@@ -213,9 +221,6 @@ void drawBackground(){
   text("RAM", 1060, 590);
   text("Address: " + RA, 1000, 620);
   text("Value: " + RV, 1000, 660);
-  text("Program Counter", 300, 140);
-  text("Address: " + PA, 300, 170);
-  text("Value:" + PV + " (" + opName(PV) + ")", 300, 200);
   text("Cache", 300, 320);
   text("A: " + CA, 300, 350);
   text("B: " + CB, 300, 375);
